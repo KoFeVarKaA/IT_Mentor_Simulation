@@ -1,0 +1,2 @@
+class Similation():
+    pass

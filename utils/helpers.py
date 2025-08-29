@@ -1,0 +1,2 @@
+class GlVariables():
+    pass
