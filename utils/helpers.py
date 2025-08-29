@@ -1,2 +1,2 @@
 class GlVariables():
-    pass
+    pause = False
