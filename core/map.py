@@ -6,7 +6,7 @@ class Map():
         for i in range(Cfg.width):
             map.append([])
             for j in range(Cfg.height):
-                map[i].append(" .")
+                map[i].append(Cfg.picture_empty)
         return map
     
     def draw_map(map): 
@@ -14,12 +14,13 @@ class Map():
         for i in range(Cfg.width):
             row = ' '.join(map[i])
             rows.append(f'║   {row}    ║') 
+        cnt_space = (1+Cfg.size_empty)*Cfg.height
         return '\n'.join(
-            ["╔" + "═══" + "═"*3 *Cfg.height + "═══" + "╗"] +
-            ["║" + " "*((6+3*Cfg.height-20)//2 + (6+3*Cfg.height-20)%2) 
-            + "СИМУЛЯЦИЯ ЭКОСИСТЕМЫ" + " "*((6+3*Cfg.height-20)//2) + "║"] +
-            ["╠" + "═══" + "═"*3*Cfg.height + "═══" + "╣"] +
+            ["╔" + "═══" + "═"*cnt_space + "═══" + "╗"] +
+            ["║" + " "*((6+cnt_space-20)//2 + (6+cnt_space-20)%2) 
+            + "СИМУЛЯЦИЯ ЭКОСИСТЕМЫ" + " "*((6+cnt_space-20)//2) + "║"] +
+            ["╠" + "═══" + "═"*cnt_space + "═══" + "╣"] +
                             rows +
-            ["╚" + "═══" + "═"*3*Cfg.height + "═══" + "╝"]
+            ["╚" + "═══" + "═"*cnt_space + "═══" + "╝"]
             )
 

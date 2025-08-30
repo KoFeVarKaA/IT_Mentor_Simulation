@@ -1,7 +1,7 @@
 class Cfg():
     # map
-    width = 10
-    height = 20
+    width = 5   # x
+    height = 4  # y
 
     # count_unit
     count_grass = 8
@@ -11,6 +11,8 @@ class Cfg():
     count_predator = 1
 
     # unit picture (only emoticons sizes two spaces)
+    picture_empty = ' .'
+    size_empty = 2 # How many spaces does it take
     picture_grass = '🌱'
     picture_tree = '🌲'
     picture_rock = '⚫'
