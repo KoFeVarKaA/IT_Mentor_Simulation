@@ -30,3 +30,5 @@ class Similation():
         Grass.generate(Cfg.count_grass)
         Rock.generate(Cfg.count_rock)
         Tree.generate(Cfg.count_tree)
+        Herbivore.generate(Cfg.count_herbivore)
+        Predator.generate(Cfg.count_predator)

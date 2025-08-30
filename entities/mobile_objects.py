@@ -1,3 +1,4 @@
+from config import Cfg
 from entities.entity import Entity
 
 
@@ -8,12 +9,13 @@ class Creature(Entity):
         pass
 
 class Herbivore(Creature):
-    count = 0
+    symbol = Cfg.picture_herbivore
     def make_move():
         pass
     
 
 
 class Predator(Creature):
+    symbol = Cfg.picture_predator
     def make_move():
         pass
