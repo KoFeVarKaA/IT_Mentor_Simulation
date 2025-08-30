@@ -1,24 +1,25 @@
-from config import width, height
+from config import Cfg
 
 class Map():
     def create_map():
-        map = [[] for i in range(width)]
-        for i in range(width):
-            for j in range(height):
-                map[i].append("0")
+        map = []
+        for i in range(Cfg.width):
+            map.append([])
+            for j in range(Cfg.height):
+                map[i].append(" .")
         return map
     
     def draw_map(map): 
         rows = []
-        for i in range(width):
+        for i in range(Cfg.width):
             row = ' '.join(map[i])
             rows.append(f'║   {row}    ║') 
         return '\n'.join(
-            ["╔" + "═══" + "═"*2 *height + "═══" + "╗"] +
-            ["║" + " "*((6+2*height-20)//2 + (6+2*height-20)%2) 
-            + "СИМУЛЯЦИЯ ЭКОСИСТЕМЫ" + " "*((6+2*height-20)//2) + "║"] +
-            ["╠" + "═══" + "═"*2*height + "═══" + "╣"] +
+            ["╔" + "═══" + "═"*3 *Cfg.height + "═══" + "╗"] +
+            ["║" + " "*((6+3*Cfg.height-20)//2 + (6+3*Cfg.height-20)%2) 
+            + "СИМУЛЯЦИЯ ЭКОСИСТЕМЫ" + " "*((6+3*Cfg.height-20)//2) + "║"] +
+            ["╠" + "═══" + "═"*3*Cfg.height + "═══" + "╣"] +
                             rows +
-            ["╚" + "═══" + "═"*2*height + "═══" + "╝"]
+            ["╚" + "═══" + "═"*3*Cfg.height + "═══" + "╝"]
             )
 

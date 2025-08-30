@@ -1,11 +1,14 @@
 from entities.entity import Entity
-
+from config import Cfg
 
 class Grass(Entity):
-    pass
+    symbol = Cfg.picture_grass
+    
 
 class Tree(Entity):
-    pass
+    symbol = Cfg.picture_tree
+    
 
 class Rock(Entity):
-    pass
+    symbol = Cfg.picture_rock
+    

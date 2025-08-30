@@ -2,12 +2,18 @@ from entities.entity import Entity
 
 
 class Creature(Entity):
-    pass
-
+    def make_move():
+        pass
+    def find_prey():
+        pass
 
 class Herbivore(Creature):
-    pass
+    count = 0
+    def make_move():
+        pass
+    
 
 
 class Predator(Creature):
-    pass
+    def make_move():
+        pass
