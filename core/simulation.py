@@ -11,11 +11,13 @@ class Similation():
     def next_turn():
         Herbivore.make_move()
         Predator.make_move()
-        Map.draw_map()
+        Map.draw_map(GlVariables.map)
     
     def start_simulation():
         if Errors.start_err_check():
             Similation.init_actions()
+            Map.draw_map(GlVariables.map)
+            Similation.next_turn()
             # while True:
             #     Similation.next_turn()
 
@@ -26,6 +28,12 @@ class Similation():
             pass
         return
     
+    def restart_simulation():
+        print("Restart_simulation? Y/N")
+        if input().lower() == "y":
+            Similation.start_simulation()
+        return
+
     def init_actions():
         Grass.generate(Cfg.count_grass)
         Rock.generate(Cfg.count_rock)

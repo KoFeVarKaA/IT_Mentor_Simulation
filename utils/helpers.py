@@ -13,4 +13,4 @@ class GlVariables():
     [' .', '⚫', ' .', ' .'],
     [' .', ' .', ' .', ' .'] 
     ]
-    
+    # map = test_map

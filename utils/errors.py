@@ -7,3 +7,6 @@ class Errors():
             print("ERROR: Units should not occupy more than half of the field.")
             return False
         return True
+    
+    def path_error():
+        print("ERROR: Unit has nowhere else to go")
