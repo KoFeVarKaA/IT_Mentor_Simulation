@@ -34,7 +34,10 @@ class Herbivore(Creature):
             prey=GlV.grass    
         )
         self.pathfinder = PathfindingHerbivore(
-            black_list = [Cfg.picture_rock, Cfg.picture_tree, Cfg.picture_predator]
+            black_list = [
+                Cfg.picture_rock, Cfg.picture_tree, 
+                Cfg.picture_predator, Cfg.picture_herbivore,
+                ]
         )      
     
 
@@ -47,6 +50,9 @@ class Predator(Creature):
             prey=GlV.herbivores
         )
         self.pathfinder = Pathfinding(
-            black_list = [Cfg.picture_rock, Cfg.picture_tree, Cfg.picture_grass]
+            black_list = [
+                Cfg.picture_rock, Cfg.picture_tree, 
+                Cfg.picture_grass, Cfg.picture_predator,
+                ]
         )
         

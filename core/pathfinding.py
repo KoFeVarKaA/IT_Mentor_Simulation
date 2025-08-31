@@ -1,3 +1,4 @@
+import logging
 import random
 from config import Cfg
 from utils.errors import Errors
@@ -47,8 +48,7 @@ class Pathfinding():
     def next_step(self, xs, ys, xf, yf):
         av_step = self.get_av_step(xs, ys, xf, yf)
         if len(av_step) == 0:
-            Errors.path_error()
-            # return None
+            return None
         var_step = []
         min_weight = min(av_step,  key=lambda x: x[1])[1]
         for i in range(0, len(av_step)):
@@ -67,7 +67,13 @@ class Pathfinding():
         while pos_name != str(xf)+':'+str(yf):
             pos_name = self.next_step(int(pos[0]), int(pos[1]), xf, yf)
             if pos_name == None:
-                return xs, ys
+                # выбираем крадчайший путь в качестве след. шага
+                keys = list(self.ch_step.keys())
+                if len(keys) < 2:
+                    pos_name = keys[0]
+                else:
+                    pos_name = keys[1]
+                break
             self.blocked_pos.append(pos_name)
             pos = pos_name.split(":")
 

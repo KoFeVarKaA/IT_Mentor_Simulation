@@ -1,8 +1,8 @@
 class Cfg():
     # map 
     # max 256x256; min 5x5
-    width = 8   # x
-    height = 10  # y
+    width = 6   # x
+    height = 6  # y
 
     # count_unit
     count_grass = 2
@@ -19,3 +19,6 @@ class Cfg():
     picture_rock = '⚫'
     picture_herbivore  = '🐇'
     picture_predator = '🐺'
+
+    # other
+    delay = 1

@@ -1,3 +1,4 @@
+import time
 from config import Cfg
 from core.map import Map
 from entities.mobile_objects import Herbivore, Predator
@@ -18,11 +19,15 @@ class Similation():
         if Errors.start_err_check():
             Similation.init_actions()
             Map.draw_map(GlV.map)
-            # Similation.next_turn()
+            # GlV.grass = [Grass(pos=[0,0]), Grass(pos=[0,5]), Grass(pos=[3,3])]
+            # GlV.herbivores = [Herbivore(pos=[1,3])]
+            # GlV.predators = [Predator(pos=[3,5])]
             while True:
                 Similation.next_turn()
+
     
     def next_turn():
+        time.sleep(GlV.delay)
         for i in range(len(GlV.herbivores)):
             GlV.herbivores[i].pos = GlV.herbivores[i].make_move()
         for i in range(len(GlV.predators)):

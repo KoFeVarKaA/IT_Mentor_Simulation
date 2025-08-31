@@ -1,3 +1,4 @@
+from config import Cfg
 from core.locator import Locator
 from core.map import Map
 
@@ -17,18 +18,22 @@ class GlVariables():
     #     self.map = map
     #     self.locator = locator
     #     self.pause = pause
-    # test_map = [
-    # [' .', ' .', ' .', ' .'],  
-    # [' .', '⚫', ' .', ' .'],    
-    # ['🐇', '⚫', ' .', '🐺'],
-    # [' .', '⚫', ' .', ' .'],
-    # [' .', ' .', ' .', ' .'] 
-    # ]
-    # map = test_map
-
+    test_map = [
+    ['🌱', ' .', ' .', ' .', ' .','🌱',],  
+    [' .', ' .', ' .', ' .', ' .',' .',],    
+    [' .', ' .', ' .', ' .', ' .',' .',],
+    [' .', '🐇', ' .', '🌱', ' .',' .',],
+    [' .', ' .', '⚫', ' .', ' .',' .',],
+    [' .', '⚫', '⚫', '🐺', ' .',' .',], 
+    [' .', ' .', ' .', ' .', ' .',' .',],  
+    ]
     herbivores = []
     predators = []
     grass = []
     map = Map.create_map()
     locator = Locator()
+
     pause = False
+    delay = Cfg.delay
+
+    # map = test_map
