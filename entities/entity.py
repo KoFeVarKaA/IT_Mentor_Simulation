@@ -1,7 +1,7 @@
 import random
 
 from config import Cfg
-from utils.helpers import GlVariables
+from utils.helpers import GlVariables as GlV
 
 
 
@@ -15,10 +15,10 @@ class Entity:
         def find_plase():
             while True:
                 x, y = random.randint(0, Cfg.width-1), random.randint(0, Cfg.height-1)
-                if GlVariables.map[y][x] == Cfg.picture_empty:
+                if GlV.map[y][x] == Cfg.picture_empty:
                     return x, y
         for i in range(count):
             x, y = find_plase()
-            GlVariables.map[y][x] = cls.symbol
+            GlV.map[y][x] = cls.symbol
             if mass != None:
                 mass.append(cls(pos = [x, y]))

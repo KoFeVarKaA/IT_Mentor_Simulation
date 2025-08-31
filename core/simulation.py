@@ -18,15 +18,15 @@ class Similation():
         if Errors.start_err_check():
             Similation.init_actions()
             Map.draw_map(GlV.map)
-            Similation.next_turn()
-            # while True:
-            #     Similation.next_turn()
+            # Similation.next_turn()
+            while True:
+                Similation.next_turn()
     
     def next_turn():
         for i in range(len(GlV.herbivores)):
-            GlV.herbivores[i].make_move()
+            GlV.herbivores[i].pos = GlV.herbivores[i].make_move()
         for i in range(len(GlV.predators)):
-            GlV.predators[i].make_move()
+            GlV.predators[i].pos = GlV.predators[i].make_move()
         Map.draw_map(GlV.map)
       
     def restart_simulation():

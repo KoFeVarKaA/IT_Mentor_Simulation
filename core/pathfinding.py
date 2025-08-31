@@ -48,7 +48,7 @@ class Pathfinding():
         av_step = self.get_av_step(xs, ys, xf, yf)
         if len(av_step) == 0:
             Errors.path_error()
-            return
+            # return None
         var_step = []
         min_weight = min(av_step,  key=lambda x: x[1])[1]
         for i in range(0, len(av_step)):
@@ -67,7 +67,7 @@ class Pathfinding():
         while pos_name != str(xf)+':'+str(yf):
             pos_name = self.next_step(int(pos[0]), int(pos[1]), xf, yf)
             if pos_name == None:
-                pos_name = str(xf)+':'+str(yf)
+                return xs, ys
             self.blocked_pos.append(pos_name)
             pos = pos_name.split(":")
 

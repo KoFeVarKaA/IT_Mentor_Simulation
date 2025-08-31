@@ -16,7 +16,14 @@ class Creature(Entity):
             self.pos[0], self.pos[1], pos_food[0], pos_food[1]
             )
         GlV.map[self.pos[1]][self.pos[0]] = Cfg.picture_empty
+        if GlV.map[yf][xf] == self.prey[0].symbol:
+            self.prey[0].generate(1, self.prey)
+            for i in range(len(self.prey)):
+                if self.prey[i].pos == [xf, yf]:
+                    self.prey.pop(i)
+                    break
         GlV.map[yf][xf] = self.symbol
+        return [xf, yf]
 
 class Herbivore(Creature):
     symbol=Cfg.picture_herbivore

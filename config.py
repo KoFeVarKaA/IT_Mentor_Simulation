@@ -1,5 +1,6 @@
 class Cfg():
-    # map
+    # map 
+    # max 256x256; min 5x5
     width = 8   # x
     height = 10  # y
 
