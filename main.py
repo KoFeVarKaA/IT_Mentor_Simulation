@@ -5,7 +5,7 @@ from tests.hiden_tests import HidenTests
 # HidenTests.test2()
 # HidenTests.test1()
 
-for i in range(5):
-    pass
+# for i in range(5):
+#     pass
 
 Similation.start_simulation()

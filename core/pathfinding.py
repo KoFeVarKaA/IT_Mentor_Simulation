@@ -1,32 +1,23 @@
 import random
 from config import Cfg
 from utils.errors import Errors
-from utils.helpers import GlVariables
+from utils.helpers import GlVariables as GlV
 
 
 class Pathfinding():
-    # test_map = [
-    # [' .', ' .', ' .', ' .'],  
-    # [' .', '⚫', ' .', ' .'],    
-    # ['🐇', '⚫', ' .', '🐺'],
-    # [' .', '⚫', ' .', ' .'],
-    # [' .', ' .', ' .', ' .'] 
-    # ]
+     
     def __init__(
             self,
             black_list = [Cfg.picture_rock, Cfg.picture_tree,],
-            map = GlVariables.test_map,
             ch_step = {},
-            trase = [] 
+            blocked_pos = [] 
     ):
         self.black_list = black_list
-        self.map = map
         self.ch_step = ch_step
-        self.trase = trase
+        self.blocked_pos = blocked_pos
 
-    def get_dist(self, xs, ys, xf, yf):
-        return (abs(xf-xs) + abs(yf-ys))*10
-
+    def get_weight(self, weight_mass: list, xs, ys) -> int:
+        return sum(weight_mass)
 
     def get_av_step(self, xs, ys, xf, yf):
         av_step = []
@@ -36,16 +27,19 @@ class Pathfinding():
                 ystep = ys + y
                 if 0 <= xstep < Cfg.width and 0 <= ystep < Cfg.height :
                     name = str(xstep)+':'+str(ystep)
-                    if self.map[ystep][xstep] not in self.black_list:
-                        if name not in self.ch_step.keys(): 
+                    if GlV.map[ystep][xstep] not in self.black_list:
+                        if name not in self.blocked_pos: 
                             if abs(x) == abs(y):
                                 ln = self.ch_step[str(xs)+':'+str(ys)][2] + 14
                             else:
                                 ln = self.ch_step[str(xs)+':'+str(ys)][2] +10
-                            dist = self.get_dist(xstep, ystep, xf, yf)
-                            self.ch_step[name] = [xs, ys, ln, dist, ln+dist]
-                            av_step.append([name, ln+dist])
-                        elif name not in self.trase:
+                            dist = GlV.locator.get_dist(xstep, ystep, xf, yf)
+                            weight = self.get_weight([ln, dist], xs, ys)
+                            if name in self.ch_step.keys():
+                                if weight < self.ch_step[name][4]:
+                                     self.ch_step[name] = [xs, ys, ln, dist, weight]
+                            else:
+                                self.ch_step[name] = [xs, ys, ln, dist, weight]
                             av_step.append([name, self.ch_step[name][4]])
         return av_step
 
@@ -65,34 +59,30 @@ class Pathfinding():
     def find_path(self, xs, ys, xf, yf):
         start_pos = str(xs)+':'+str(ys)
         self.ch_step = {
-            start_pos: [0, 0, 0, self.get_dist(xs, ys, xf, yf), 999]
+            start_pos: [0, 0, 0, GlV.locator.get_dist(xs, ys, xf, yf), 999]
             }
-        self.trase = [start_pos]
+        self.blocked_pos = [start_pos]
         pos_name = start_pos
         pos = pos_name.split(":")
         while pos_name != str(xf)+':'+str(yf):
             pos_name = self.next_step(int(pos[0]), int(pos[1]), xf, yf)
-            self.trase.append(pos_name)
-            pos = pos_name.split(":")      
-        # Делаем шаг назад, пока не узнаем конечную точку
-        xn, yn = self.trase[1].split(":")[0],  xn, yn = pos_name.split(":")[0], pos_name.split(":")[1].split(":")[1]    
-        # возвращаем следующий ход
+            if pos_name == None:
+                pos_name = str(xf)+':'+str(yf)
+            self.blocked_pos.append(pos_name)
+            pos = pos_name.split(":")
+
+        while pos_name != start_pos:
+            nxt_name = str(self.ch_step[pos_name][0]) + ":" + str(self.ch_step[pos_name][1])
+            if nxt_name == start_pos:
+                xn, yn = int(pos_name.split(":")[0]), int(pos_name.split(":")[1])
+            pos_name = nxt_name   
         return xn, yn
         
 
+class PathfindingHerbivore(Pathfinding):    
+    def dist_to_pred(self, xs, ys):
+        xf, yf = GlV.locator.nearest_smth(xs, ys, GlV.predators)
+        return GlV.locator.get_dist(xs, ys, xf, yf)
 
-
-
-
-    """ 
-    ch_step - проверенные ходы, подробнее:
-    {“x:y”:
-    [
-    Откуда пришла x
-    Откуда пришла y
-    Длина пути из стартовой точки
-    Пр. расстояние до яч
-    Вес
-    ]
-    }
-    """
+    def get_weight(self, weight_mass: list, xs, ys) -> int:
+        return sum(weight_mass) - self.dist_to_pred(xs, ys)

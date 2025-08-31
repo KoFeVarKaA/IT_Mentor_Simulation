@@ -1,9 +1,11 @@
 from random import shuffle
 from config import Cfg
+from core.locator import Locator
 from core.map import Map
 
 class GlVariables():
     map = Map.create_map()
+    locator = Locator()
     pause = False
 
     test_map = [
@@ -14,3 +16,6 @@ class GlVariables():
     [' .', ' .', ' .', ' .'] 
     ]
     # map = test_map
+    herbivores = []
+    predators = []
+    grass = []

@@ -3,9 +3,9 @@ from config import Cfg
 class Map():
     def create_map():
         map = []
-        for i in range(Cfg.width):
+        for i in range(Cfg.height):
             map.append([])
-            for j in range(Cfg.height):
+            for j in range(Cfg.width):
                 map[i].append(Cfg.picture_empty)
         return map
     

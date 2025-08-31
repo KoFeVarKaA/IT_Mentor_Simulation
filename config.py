@@ -1,7 +1,7 @@
 class Cfg():
     # map
-    width = 7   # x
-    height = 7  # y
+    width = 8   # x
+    height = 10  # y
 
     # count_unit
     count_grass = 2
