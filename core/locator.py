@@ -2,17 +2,20 @@
 
 
 class Locator():
-    def __init__(self):
+    """
+    Класс для поиска чего-либо на карте
+    """
+    def __init__(self) -> None:
         pass
     
-    def get_dist(self, xs, ys, xf, yf):
+    def get_dist(self, xs: int, ys: int, xf: int, yf: int) -> int:
         return (abs(xf-xs) + abs(yf-ys))*10
 
     def nearest_smth(self, 
             xs: int, 
             ys: int, 
             mass_to_find: list,
-        ):
+        ) -> tuple:
         mass = mass_to_find
         min_dist = abs(xs - mass[0].pos[0]) + abs(ys - mass[0].pos[1])
         xmin, yxmin = None, None

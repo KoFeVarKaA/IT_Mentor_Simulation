@@ -3,9 +3,11 @@ from core.locator import Locator
 from core.map import Map
 
 class GlVariables():
-    herbivores = []
-    predators = []
-    grass = []
+    """
+    Класс содержащий глобальные переменные, 
+    которые изменяются по ходу исполнения программы.
+    Создан для удобства и уменьшения количества импортов
+    """
     map = Map.create_map()
     locator = Locator()
 
@@ -15,13 +17,3 @@ class GlVariables():
     turn = 0
     eaten_grass = 0
     eaten_herbivores = 0
-    # test_map = [
-    # ['🌱', ' .', ' .', ' .', ' .','🌱',],  
-    # [' .', ' .', ' .', ' .', ' .',' .',],    
-    # [' .', ' .', ' .', ' .', ' .',' .',],
-    # [' .', '🐇', ' .', '🌱', ' .',' .',],
-    # [' .', ' .', '⚫', ' .', ' .',' .',],
-    # [' .', '⚫', '⚫', '🐺', ' .',' .',], 
-    # [' .', ' .', ' .', ' .', ' .',' .',],  
-    # ]
-    # map = test_map

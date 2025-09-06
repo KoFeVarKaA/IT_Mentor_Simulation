@@ -1,5 +1,9 @@
 from config import Cfg
 class Errors():
+    """
+    Класс для действий связанных с ошибками 
+    (вывод сообщений, проверка)
+    """
     def start_err_check():
         if (
             Cfg.count_grass + Cfg.count_rock + Cfg.count_tree

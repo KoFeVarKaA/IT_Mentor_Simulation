@@ -1,24 +1,27 @@
 class Cfg():
-    # map 
-    # max 256x256; min 5x5
-    width = 20   # x
-    height = 20  # y
+    """
+    Настройки симуляции.
+    Количество юнитов ограничено 50% от размера карты
+    """
+    # Карта 
+    # max 32x32; min 5x5
+    width = 32   # x
+    height = 32 # y
 
-    # count_unit
-    count_grass = 10
-    count_tree = 10
-    count_rock = 10
-    count_herbivore = 10
-    count_predator = 10
+    # Количество юнитов
+    count_grass = 5
+    count_tree = 102
+    count_rock = 102
+    count_herbivore = 3
+    count_predator = 3
 
-    # unit picture (only emoticons sizes two spaces)
+    # Картинка для юнитов (только смайлики или текст размером в 2 пробела)
     picture_empty = ' .'
-    size_empty = 2 # How many spaces does it take
     picture_grass = '🌱'
     picture_tree = '🌲'
     picture_rock = '⚫'
     picture_herbivore  = '🐇'
     picture_predator = '🐺'
 
-    # other
-    delay = 1
+    # Остальное
+    delay = 1 # Задержка между ходами

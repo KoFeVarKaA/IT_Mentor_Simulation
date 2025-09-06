@@ -1,9 +1,15 @@
 from config import Cfg
 from utils.helpers import GlVariables as GlV
 class Logs():
+    """
+    В дальнейшем планируется добавить расширенные логи
+    """
     pass
 
 class Statistics():
+    """
+    Класс для вывода базовой статистики
+    """
     def info():
         info = (
             "Turn: " + str(GlV.turn) + "  " +
