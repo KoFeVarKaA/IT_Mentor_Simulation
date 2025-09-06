@@ -1,6 +1,5 @@
 import time
 
-
 from config import Cfg
 from core.map import Map
 from core.render import Render
@@ -9,6 +8,7 @@ from entities.static_objects import Grass, Rock, Tree
 from utils.errors import Errors
 from utils.helpers import GlVariables as GlV
 from utils.logger import Statistics
+
 
 class Similation():
     """

@@ -1,5 +1,7 @@
 from config import Cfg
 from utils.helpers import GlVariables as GlV
+
+
 class Logs():
     """
     В дальнейшем планируется добавить расширенные логи

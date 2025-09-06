@@ -1,5 +1,6 @@
 import logging
 import random
+
 from config import Cfg
 from core.map import Map
 from utils.errors import Errors

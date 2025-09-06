@@ -2,6 +2,7 @@ from config import Cfg
 from core.locator import Locator
 from core.map import Map
 
+
 class GlVariables():
     """
     Класс содержащий глобальные переменные, 

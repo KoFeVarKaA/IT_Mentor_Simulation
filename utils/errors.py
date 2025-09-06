@@ -1,4 +1,6 @@
 from config import Cfg
+
+
 class Errors():
     """
     Класс для действий связанных с ошибками 

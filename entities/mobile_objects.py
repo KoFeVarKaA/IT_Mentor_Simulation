@@ -4,6 +4,7 @@ from core.pathfinding import Pathfinding, PathfindingHerbivore, PathfindingPreda
 from entities.entity import Entity
 from utils.helpers import GlVariables as GlV
 
+
 class Creature(Entity):
     """
     Класс являющийся основой живых существ,
