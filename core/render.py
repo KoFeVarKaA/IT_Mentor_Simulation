@@ -1,3 +1,4 @@
+import os
 from config import Cfg
 
 
@@ -6,6 +7,7 @@ class Render():
     Класс для рендера чего бы то не было
     """
     def draw_map(map: list) -> None:
+        os.system('cls')
         rows = []
         for i in range(Cfg.height):
             row = ' '.join(map[i])
@@ -20,3 +22,4 @@ class Render():
             ["╚" + "═══" + "═"*cnt_space + "═══" + "╝"]
             )
         print(drawn_map)
+        

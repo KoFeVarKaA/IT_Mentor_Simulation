@@ -23,14 +23,6 @@ class Similation():
         Herbivore.generate(Cfg.count_herbivore, Map.herbivores)
         Predator.generate(Cfg.count_predator, Map.predators)
 
-    def start_simulation() -> None:
-        if Errors.start_err_check():
-            Similation.init_actions()
-            print(Statistics.info())
-            Render.draw_map(GlV.map)
-            while True:
-                Similation.next_turn()
-    
     def next_turn() -> None:
         GlV.turn += 1
         time.sleep(GlV.delay)
@@ -45,5 +37,12 @@ class Similation():
             Map.herbivores[i].unbusy_unit()
         for i in range(len(Map.herbivores)):
             Map.herbivores[i].unbusy_unit()
-        print(Statistics.info())
         Render.draw_map(GlV.map)
+        print(Statistics.info())
+
+    def start_simulation() -> None:
+        if Errors.start_err_check():
+            Similation.init_actions()
+            while True:
+                Similation.next_turn()
+    

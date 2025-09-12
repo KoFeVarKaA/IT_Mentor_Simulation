@@ -19,3 +19,4 @@ class Statistics():
             Cfg.picture_predator + ": " + str(GlV.eaten_herbivores) + "  " 
         )
         return info
+    

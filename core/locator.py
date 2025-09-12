@@ -20,3 +20,4 @@ class Locator():
             if abs(xs - mass[i].pos[0]) + abs(ys - mass[i].pos[1]) <= min_dist:
                 xmin, yxmin = mass[i].pos[0], mass[i].pos[1]
         return xmin, yxmin
+    

@@ -102,5 +102,4 @@ class Predator(Creature):
     def eat_prey(self, xf: int, yf: int) -> None:
         super().eat_prey(xf, yf)
         GlV.eaten_herbivores += 1
-
     

@@ -142,3 +142,4 @@ class PathfindingHerbivore(Pathfinding):
 
     def get_weight(self, weight_mass: list, xs: int, ys: int) -> int:
         return sum(weight_mass) - self.dist_to_pred(xs, ys)
+    

@@ -18,3 +18,4 @@ class GlVariables():
     turn = 0
     eaten_grass = 0
     eaten_herbivores = 0
+    

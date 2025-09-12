@@ -24,3 +24,4 @@ class Entity:
             GlV.map[y][x] = cls.symbol
             if mass != None:
                 mass.append(cls(pos = [x, y]))
+                

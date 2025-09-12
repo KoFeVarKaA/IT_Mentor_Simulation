@@ -1,4 +1,6 @@
 from core.simulation import Similation
+from tests.hiden_tests import HidenTests
 
 
-Similation.start_simulation()
+HidenTests.test1()
+# Similation.start_simulation()
