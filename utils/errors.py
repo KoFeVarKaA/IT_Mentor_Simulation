@@ -1,4 +1,4 @@
-from config import Cfg
+from config import Config as Cfg
 
 
 class Errors():
@@ -24,4 +24,3 @@ Continue? y/n""")
     
     def path_error():
         print("ERROR: Unit has nowhere else to go")
-        

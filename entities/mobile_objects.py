@@ -1,4 +1,4 @@
-from config import Cfg
+from config import Config as Cfg
 from core.map import Map
 from core.pathfinding import Pathfinding, PathfindingHerbivore, PathfindingPredator
 from entities.entity import Entity

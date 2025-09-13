@@ -1,4 +1,4 @@
-from config import Cfg
+from config import Config as Cfg
 
 class Map():
     """

@@ -1,5 +1,5 @@
 from entities.entity import Entity
-from config import Cfg
+from config import Config as Cfg
 
 class Grass(Entity):
     symbol=Cfg.picture_grass

@@ -1,6 +1,6 @@
 import time
 
-from config import Cfg
+from config import Config as Cfg
 from core.map import Map
 from core.render import Render
 from entities.mobile_objects import Herbivore, Predator

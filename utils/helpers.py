@@ -1,4 +1,4 @@
-from config import Cfg
+from config import Config as Cfg
 from core.locator import Locator
 from core.map import Map
 
@@ -18,4 +18,3 @@ class GlVariables():
     turn = 0
     eaten_grass = 0
     eaten_herbivores = 0
-    

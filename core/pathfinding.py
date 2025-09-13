@@ -1,7 +1,7 @@
 import logging
 import random
 
-from config import Cfg
+from config import Config as Cfg
 from core.map import Map
 from utils.errors import Errors
 from utils.helpers import GlVariables as GlV

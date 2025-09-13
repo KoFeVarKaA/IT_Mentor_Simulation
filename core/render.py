@@ -1,5 +1,5 @@
 import os
-from config import Cfg
+from config import Config as Cfg
 
 
 class Render():
@@ -22,4 +22,3 @@ class Render():
             ["╚" + "═══" + "═"*cnt_space + "═══" + "╝"]
             )
         print(drawn_map)
-        

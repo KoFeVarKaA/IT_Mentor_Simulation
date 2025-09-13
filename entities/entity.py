@@ -1,6 +1,6 @@
 import random
 
-from config import Cfg
+from config import Config as Cfg
 from utils.helpers import GlVariables as GlV
 
 
@@ -24,4 +24,3 @@ class Entity:
             GlV.map[y][x] = cls.symbol
             if mass != None:
                 mass.append(cls(pos = [x, y]))
-                

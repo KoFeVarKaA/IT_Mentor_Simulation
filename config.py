@@ -1,7 +1,6 @@
-class Cfg():
+class Config:
     """
     Настройки симуляции.
-    Количество юнитов ограничено 50% от размера карты
     """
     # Карта 
     # Максимальный размер карты 32x32, минимальный - 5x5
@@ -10,6 +9,7 @@ class Cfg():
 
     # Количество юнитов
     # Максимальное количество юнитов - 50% от карты
+    dynamic_generation = True # ДОБАВИТЬ ДИНАМИЧЕСКУЮ ГЕНЕРАЦИЮ
     count_grass = 3
     count_tree = 5
     count_rock = 5
@@ -21,9 +21,8 @@ class Cfg():
     picture_grass = '🌱'
     picture_tree = '🌲'
     picture_rock = '⚫'
-    picture_herbivore  = '🐇'
+    picture_herbivore = '🐇'
     picture_predator = '🐺'
 
     # Остальное
     delay = 1 # Задержка между ходами
-    
