@@ -1,3 +1,6 @@
+from entities.entity import Entity
+
+
 class Map():
     def __init__(self, height: int, width: int):
         # map = {(x, y): obj}  
@@ -22,7 +25,7 @@ class Map():
     def get_map(self) -> dict:  
         return self.__map
     
-    def get_obj(self, x:int, y:int) -> type:
+    def get_obj(self, x:int, y:int) -> Entity:
         if (x, y) in self.__map.keys():
             return self.__map[(x, y)]
         return None
@@ -47,9 +50,9 @@ class Map():
         return keys_obj
     
     @property
-    def height(self):
+    def height(self) -> int:
         return self._height
     
     @property
-    def width(self):
+    def width(self) -> int:
         return self._width

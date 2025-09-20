@@ -2,7 +2,7 @@ from core.locator import Locator
 from core.map import Map
 
 
-class Generator():
+class Generator:
     def __init__(self, __map: Map, locator: Locator):
         self.__map = __map
         self.locator = locator

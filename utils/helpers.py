@@ -1,25 +1,19 @@
 from config import Config as Cfg
-from core.locator import Locator
-from core.map import Map
 
 
-class GlVariables:
+class Control:
     """
-    Класс содержащий глобальные переменные, 
-    которые изменяются по ходу исполнения программы.
-    Создан для удобства и уменьшения количества импортов
+    Класс отвечающий за управление симуляцией
     """
-    map = Map(Cfg.height, Cfg.width)
-    locator = Locator(map)
-
     pause = False
     delay = Cfg.delay
-
-    turn = 0
-    eaten_grass = 0
-    eaten_herbivores = 0
 
 class Statistic:
     turn = 0
     eaten_grass = 0
     eaten_herbivores = 0
+
+    def get_statistic(self) -> str:
+        return (f"turn: {self.turn}" +
+                f"{Cfg.picture_herbivore} {self.eaten_grass}" +
+                f"{Cfg.count_predator} {self.eaten_herbivores}")

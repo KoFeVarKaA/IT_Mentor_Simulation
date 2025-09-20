@@ -1,11 +1,13 @@
 from config import Config
+from core.map import Map
 from utils.helpers import Statistic
 
 
-class Logs():
+class Logs:
     pass
 
-class Statistics():
+
+class Statistics:
     """
     Класс для вывода базовой статистики
     """
