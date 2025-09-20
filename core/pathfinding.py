@@ -1,21 +1,22 @@
 import random
 from core.locator import Locator
 from core.map import Map
-from entities.mobile_objects import Predator
 
 
 class Pathfinding():
     def __init__(
             self,
-            __map: Map,
+            _map: Map,
             locator: Locator,
             black_list: list = [],
+            hunter_class: type = None,
     ) -> None:
         self.black_list = black_list    
         self.ch_step = {}         
         self.blocked_pos = []
-        self.__map = __map
+        self._map = _map
         self.locator = locator 
+        self.hunter_class = hunter_class
 
     # Узнать доступные шаги
     def get_av_step(self, xs: int, ys: int, xf: int, yf: int) -> list:
@@ -28,10 +29,10 @@ class Pathfinding():
                 ystep = ys + y
 
                 # Выбранный шаг не находится за границами карты?
-                if 0 <= xstep < self.__map.width and 0 <= ystep < self.__map.height :
+                if 0 <= xstep < self._map.width and 0 <= ystep < self._map.height :
                     name = (xstep, ystep)
                     # Выбранный шаг - это не объект в черном списке (см. выше)
-                    if self.__map.get_obj(x=xstep, y=ystep).symbol not in self.black_list:
+                    if self._map.get_obj(x=xstep, y=ystep).symbol not in self.black_list:
                         # Юнит еще не выбирал данный шаг?
                         if name not in self.blocked_pos:
                             # Расчет параметров
@@ -116,7 +117,7 @@ class PathfindingPredator(Pathfinding):
 
 class PathfindingHerbivore(Pathfinding):    
     def dist_to_pred(self, xs: int, ys: int) -> int:
-        xf, yf = self.locator.nearest_smth(xs, ys, Predator)
+        xf, yf = self.locator.nearest_smth([xs, ys], self.hunter_class)
         return self.locator.get_dist(xs, ys, xf, yf)
 
     def get_weight(self, weight_mass: list, xs: int, ys: int) -> int:

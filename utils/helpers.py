@@ -15,5 +15,5 @@ class Statistic:
 
     def get_statistic(self) -> str:
         return (f"turn: {self.turn}" +
-                f"{Cfg.picture_herbivore} {self.eaten_grass}" +
-                f"{Cfg.count_predator} {self.eaten_herbivores}")
+                f"  {Cfg.picture_herbivore}:  {self.eaten_grass}" +
+                f"  {Cfg.picture_predator}: {self.eaten_herbivores}")

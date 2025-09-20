@@ -17,10 +17,11 @@ class Locator():
                     return (x, y)
  
     def nearest_smth(self, 
-            xs: int, 
-            ys: int,
+            pos: list,
             obj_class_find: type, 
         ) -> tuple:
+        xs = pos[0]
+        ys = pos[1]
         positions_odj = self.__map.get_pos_objs(obj_class_find)
         min_dist = abs(xs - positions_odj[0][0]) + abs(ys - positions_odj[0][0])
         xmin, yxmin = None, None
@@ -32,4 +33,8 @@ class Locator():
     @staticmethod
     def get_dist(xs: int, ys: int, xf: int, yf: int) -> int:
         return (abs(xf-xs) + abs(yf-ys))*10
+    
+    @staticmethod
+    def get_dist_list(pos_s: list, pos_f: list) -> int:
+        return (abs(pos_f[0]-pos_s[0]) + abs(pos_f[1]-pos_s[1]))*10
     

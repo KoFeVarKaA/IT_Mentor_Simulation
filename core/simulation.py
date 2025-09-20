@@ -1,8 +1,10 @@
 import time
+from config import Config as Cfg
 from core.generator import Generator
 from core.locator import Locator
 from core.map import Map
 from core.render import Render
+from entities.config_entities import ConfigHerbivore, ConfigPredator
 from entities.mobile_objects import Herbivore, Predator
 from entities.static_objects import Grass, Rock, Tree
 from utils.errors import Errors
@@ -20,41 +22,49 @@ class Simulation:
         self.locator = locator
         self.generator = generator
     
-    @staticmethod
-    def init_actions():
-        Generator.generate(Rock)
-        Generator.generate(Tree)
-        Generator.generate(Grass)
-        Generator.generate(Herbivore)
-        Generator.generate(Predator)
+    def init_actions(self):
+        self.generator.generate(object=Rock, count=Cfg.count_rock)
+        self.generator.generate(object=Tree, count=Cfg.count_tree)
+        self.generator.generate(object=Grass, count=Cfg.count_grass)
+        self.generator.generate(
+            object=Herbivore, count=Cfg.count_herbivore,
+            statistic=self.statistic,
+            _map = self.__map,
+            locator = self.locator,
+            generator = self.generator)
+        self.generator.generate(
+            object=Predator, count=Cfg.count_predator,
+            statistic=self.statistic,
+            _map = self.__map,
+            locator = self.locator,
+            generator = self.generator,)
+        Render.draw_map(self.__map)
+        print(self.statistic.get_statistic())
     
     def next_turn(self):
         self.statistic.turn += 1
         time.sleep(Control.delay)
         # Каждое существо делает ход
         for key in self.__map.get_map().keys():
-            if isinstance(self.__map[key], Herbivore):
-                self.__map[key].make_move()
+            if isinstance(self.__map.get_map()[key], Herbivore):
+                self.__map.get_map()[key].make_move()
         for key in self.__map.get_map().keys():
-            if isinstance(self.__map[key], Predator):
-                self.__map[key].make_move()
+            if isinstance(self.__map.get_map()[key], Predator):
+                self.__map.get_map()[key].make_move()
             
         # Добыча сбрасывает состояние
         for key in self.__map.get_map().keys():
-            if isinstance(self.__map[key], Herbivore):
-                self.__map[key].unbusy_unit()
+            if isinstance(self.__map.get_map()[key], Herbivore):
+                self.__map.get_map()[key].unbusy_unit()
         for key in self.__map.get_map().keys():
-            if isinstance(self.__map[key], Grass):
-                self.__map[key].unbusy_unit()
+            if isinstance(self.__map.get_map()[key], Grass):
+                self.__map.get_map()[key].unbusy_unit()
 
         Render.draw_map(self.__map)
         print(self.statistic.get_statistic())
 
-        
-
-    @staticmethod
-    def start_simulation():
+    def start_simulation(self):
         if Errors.start_err_check():
-            Simulation.init_actions()
+            self.init_actions()
             while True:
-                Simulation.next_turn()
+                self.next_turn()

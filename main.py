@@ -12,6 +12,6 @@ locator = Locator(map)
 generator = Generator(map, locator)
 simulation = Simulation(statistic, map, locator, generator)
 
-HidenTests.test2()
-# if __name__ == "main":
-    # simulation.start_simulation()
+# HidenTests.test2()
+if __name__ == "__main__":
+    simulation.start_simulation()

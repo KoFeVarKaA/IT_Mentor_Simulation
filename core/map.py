@@ -44,9 +44,9 @@ class Map():
     def get_pos_objs(self, obj_class: type) -> list[tuple]:
         keys = self.__map.keys()
         keys_obj = []
-        for i in range(len(keys)):
-            if isinstance(self.__map[keys[i]], obj_class):
-                keys_obj.append(keys[i])
+        for key in keys:
+            if isinstance(self.__map[key], obj_class):
+                keys_obj.append(key)
         return keys_obj
     
     @property

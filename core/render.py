@@ -16,7 +16,7 @@ class Render():
                 map_list[i].append(Cfg.picture_empty)
 
         for key in __map.get_map().keys():
-            map_list[key[1]][key[0]] = __map[key].symbol
+            map_list[key[1]][key[0]] = __map.get_map()[key].symbol
             
         cnt_space = 3*__map.width
         total_width = 6 + cnt_space
