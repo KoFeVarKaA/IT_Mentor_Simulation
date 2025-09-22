@@ -10,4 +10,4 @@ class Generator:
     def generate(self, object:type, count: int, **kwargs) -> None:
         for i in range(count):
             x, y = self.locator.find_place()
-            self.__map.get_map()[(x, y)] = object(pos=[x, y], **kwargs)
+            self.__map.get_map()[(x, y)] = object(pos=(x, y), **kwargs)

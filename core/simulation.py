@@ -45,12 +45,10 @@ class Simulation:
         self.statistic.turn += 1
         time.sleep(Control.delay)
         # Каждое существо делает ход
-        for key in self.__map.get_map().keys():
-            if isinstance(self.__map.get_map()[key], Herbivore):
-                self.__map.get_map()[key].make_move()
-        for key in self.__map.get_map().keys():
-            if isinstance(self.__map.get_map()[key], Predator):
-                self.__map.get_map()[key].make_move()
+        for herb_pos in self.__map.get_pos_objs(Herbivore):
+            self.__map.get_map()[herb_pos].make_move()
+        for herb_pos in self.__map.get_pos_objs(Predator):
+            self.__map.get_map()[herb_pos].make_move()
             
         # Добыча сбрасывает состояние
         for key in self.__map.get_map().keys():

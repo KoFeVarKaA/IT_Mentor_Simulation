@@ -32,22 +32,23 @@ class Pathfinding():
                 if 0 <= xstep < self._map.width and 0 <= ystep < self._map.height :
                     name = (xstep, ystep)
                     # Выбранный шаг - это не объект в черном списке (см. выше)
-                    if self._map.get_obj(x=xstep, y=ystep).symbol not in self.black_list:
-                        # Юнит еще не выбирал данный шаг?
-                        if name not in self.blocked_pos:
-                            # Расчет параметров
-                            ln = self.get_len(x, y, self.ch_step[(xs, ys)][2] )
-                            dist = self.locator.get_dist(xstep, ystep, xf, yf)
-                            weight = self.get_weight([ln, dist], xs, ys)
-
-                            # Выбор минимального веса для хода
-                            if name in self.ch_step.keys():
-                                if weight < self.ch_step[name][4]:
-                                     self.ch_step[name] = [xs, ys, ln, dist, weight]
-                            else:
-                                self.ch_step[name] = [xs, ys, ln, dist, weight]
-                            
-                            av_step.append([name, self.ch_step[name][4]])
+                    if self._map.get_obj(x=xstep, y=ystep) != None:
+                        if self._map.get_obj(x=xstep, y=ystep).symbol in self.black_list:
+                            continue
+                    # Юнит еще не выбирал данный шаг?
+                    if name not in self.blocked_pos:
+                        # Расчет параметров
+                        ln = self.get_len(x, y, self.ch_step[(xs, ys)][2] )
+                        dist = self.locator.get_dist(xstep, ystep, xf, yf)
+                        weight = self.get_weight([ln, dist], xs, ys)
+                        # Выбор минимального веса для хода
+                        if name in self.ch_step.keys():
+                            if weight < self.ch_step[name][4]:
+                                 self.ch_step[name] = [xs, ys, ln, dist, weight]
+                        else:
+                            self.ch_step[name] = [xs, ys, ln, dist, weight]
+                        
+                        av_step.append([name, self.ch_step[name][4]])
         return av_step
     
     # Выбор следующего шага из доступных

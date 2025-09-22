@@ -28,7 +28,7 @@ class Creature(Entity):
         self.generator = generator
         self.pos = pos
         self.pathfinder = Pathfinding(
-            _map = _map, locator=locator
+            _map = _map, locator=locator,
         )
         self.prey_class = prey_class
 
@@ -43,7 +43,7 @@ class Creature(Entity):
     def get_pos_food(self) -> list:
         # Определяем свободную добычу
         free_prey = []
-        for prey_pos in range(len(self._map.get_pos_objs(self.prey_class))):
+        for prey_pos in self._map.get_pos_objs(self.prey_class):
             if not self._map.get_map()[prey_pos].is_busy:
                 free_prey.append(prey_pos)
 
@@ -70,6 +70,9 @@ class Creature(Entity):
         if (xf, yf) in self._map.get_map().keys():
             if isinstance(self._map.get_map()[(xf, yf)], self.prey_class):
                 self.eat_prey(xf, yf)
+        self._map.get_map()[(xf, yf)] = self._map.get_map()[self.pos]
+        self._map.get_map().pop(self.pos)
+        self.pos = (xf, yf)
 
 
 class Herbivore(Creature):
@@ -88,7 +91,8 @@ class Herbivore(Creature):
                 _map = _map,
                 locator = locator,
                 black_list = [
-                        Rock, Tree, Predator, Herbivore
+                        Cfg.picture_rock, Cfg.picture_tree, 
+                        Cfg.picture_predator, Cfg.picture_herbivore,
                     ]
                 ),
             _map = _map,
@@ -121,7 +125,10 @@ class Predator(Creature):
             pathfinder=PathfindingPredator(
                 _map = _map,
                 locator = locator,
-                black_list = [Rock, Tree, Grass, Predator]
+                black_list = [
+                    Cfg.picture_rock, Cfg.picture_tree, 
+                    Cfg.picture_grass, Cfg.picture_predator,
+                    ]
                 ),
             _map = _map,
             locator = locator,

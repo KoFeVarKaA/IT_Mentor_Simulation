@@ -8,7 +8,7 @@ class Render():
     Класс для рендера чего бы то не было
     """
     def draw_map(__map: Map) -> None:
-        os.system('cls')
+        # os.system('cls')
         map_list = []
         for i in range(Cfg.height):
             map_list.append([])
