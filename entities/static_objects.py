@@ -8,6 +8,9 @@ class Grass(Entity):
         self.pos = pos
         self.is_busy = False
 
+    def busy_unit(self) -> None:
+        self.is_busy = True
+
     def unbusy_unit(self) -> None:
         self.is_busy = False
     
