@@ -31,7 +31,7 @@ class Creature(Entity):
 
 
     # "Съесть" добычу
-    def eat_prey(self, xf: int, yf: int, **kwargs) -> None:
+    def eat_prey(self, **kwargs) -> None:
         self.generator.generate(self.prey_class, 1, **kwargs)
 
     # Механика "занятости" добычи,
@@ -43,6 +43,8 @@ class Creature(Entity):
         # Просмотривает область вокруг юнита
         for x in [-1, 0, 1]:
             for y in [-1, 0, 1]:
+                if x == 0 and y == 0:
+                    continue
                 xstep = self.pos[0] + x
                 ystep = self.pos[1] + y
                 # Выбранный шаг не находится за границами карты?
@@ -83,10 +85,16 @@ class Creature(Entity):
             return
         if (xf, yf) in self._map.get_map.keys():
             if isinstance(self._map.get_map[(xf, yf)], self.prey_class):
-                self.eat_prey(xf, yf)
+                self.eat_prey()
         self._map.add_object(self._map.get_obj(self.pos[0], self.pos[1]), xf, yf)
         self._map.delete_object(self.pos[0], self.pos[1])
         self._map.get_obj(xf, yf).pos = (xf, yf)
+
+    def busy_unit(self) -> None:
+        self.is_busy = True
+
+    def unbusy_unit(self) -> None:
+        self.is_busy = False
 
 
 class Herbivore(Creature):
@@ -104,11 +112,8 @@ class Herbivore(Creature):
             pathfinder = PathfindingHerbivore(
                 _map = _map,
                 locator = locator,
-                black_list = [
-                        Cfg.picture_rock, Cfg.picture_tree, 
-                        Cfg.picture_predator, Cfg.picture_herbivore,
-                    ],
-                hunter_class = Predator
+                prey_class = Grass,
+                hunter_class = Predator,
                 ),
             _map = _map,
             locator = locator,
@@ -117,15 +122,11 @@ class Herbivore(Creature):
         self.statistic = statistic
         self.is_busy = False
 
-    def eat_prey(self, xf: int, yf: int) -> None:
-        super().eat_prey(xf, yf)
+    def eat_prey(self) -> None:
+        super().eat_prey()
         self.statistic.eaten_grass += 1 
 
-    def busy_unit(self) -> None:
-        self.is_busy = True
     
-    def unbusy_unit(self) -> None:
-        self.is_busy = False
                 
 
 class Predator(Creature):
@@ -143,19 +144,17 @@ class Predator(Creature):
             pathfinder=PathfindingPredator(
                 _map = _map,
                 locator = locator,
-                black_list = [
-                    Cfg.picture_rock, Cfg.picture_tree, 
-                    Cfg.picture_grass, Cfg.picture_predator,
-                    ]
+                prey_class = Herbivore,
                 ),
             _map = _map,
             locator = locator,
             generator = generator,
         )
         self.statistic = statistic
+        self.is_busy = False
 
-    def eat_prey(self, xf: int, yf: int) -> None:
-        super().eat_prey(xf, yf, 
+    def eat_prey(self,) -> None:
+        super().eat_prey( 
             statistic=self.statistic,
             _map = self._map,
             locator = self.locator,

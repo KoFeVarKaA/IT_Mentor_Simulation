@@ -7,8 +7,10 @@ class Render():
     """
     Класс для рендера чего бы то не было
     """
+    @staticmethod
     def draw_map(_map: Map) -> None:
-        os.system('cls')
+        if not Cfg.debug:
+            os.system('cls')
         map_list = []
         for i in range(Cfg.height):
             map_list.append([])

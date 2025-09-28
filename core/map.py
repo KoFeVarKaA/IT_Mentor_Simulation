@@ -16,8 +16,8 @@ class Map():
 
     def is_empty(self, x, y) -> bool:  
         if (x, y) in self._map.keys():
-            return True
-        return False
+            return False
+        return True
 
     def delete_object(self, x, y) -> None:  
         del self._map[(x, y)]
@@ -28,7 +28,7 @@ class Map():
         return None
     
     def get_pos_obj(self, obj_class: type, num_in_row: int = 1) -> tuple:
-        keys = self._map.keys()
+        keys = list(self._map.keys())
         i = 0
         while num_in_row != 0:
             if isinstance(self._map[keys[i]], obj_class):
@@ -38,9 +38,11 @@ class Map():
             i += 1
         return keys[i-1]
     
-    def get_pos_objs(self, obj_class: type) -> list[tuple]:
+    def get_pos_objs(self, obj_class: type = None) -> list[tuple]:
         keys = self._map.keys()
         keys_obj = []
+        if obj_class == None:
+            return keys
         for key in keys:
             if isinstance(self._map[key], obj_class):
                 keys_obj.append(key)

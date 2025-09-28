@@ -6,6 +6,7 @@ class Errors():
     Класс для действий связанных с ошибками 
     (вывод сообщений, проверка)
     """
+    @staticmethod
     def start_err_check():
         if (
             Cfg.count_grass + Cfg.count_rock + Cfg.count_tree
@@ -21,6 +22,6 @@ Continue? y/n""")
             if input().lower() != "y":
                 return False
         return True
-    
+    @staticmethod
     def path_error():
         print("ERROR: Unit has nowhere else to go")

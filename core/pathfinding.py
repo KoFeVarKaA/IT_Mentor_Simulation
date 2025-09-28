@@ -1,6 +1,7 @@
 import random
 from core.locator import Locator
 from core.map import Map
+from entities.entity import Entity
 
 
 class Pathfinding():
@@ -8,10 +9,10 @@ class Pathfinding():
             self,
             _map: Map,
             locator: Locator,
-            black_list: list = [],
+            prey_class: Entity,
             hunter_class: type = None,
     ) -> None:
-        self.black_list = black_list    
+        self.prey_class = prey_class  
         self.ch_step = {}         
         self.blocked_pos = []
         self._map = _map
@@ -33,8 +34,9 @@ class Pathfinding():
                     name = (xstep, ystep)
                     # Выбранный шаг - это не объект в черном списке (см. выше)
                     if self._map.get_obj(x=xstep, y=ystep) != None:
-                        if self._map.get_obj(x=xstep, y=ystep).symbol in self.black_list:
-                            continue
+                        if self._map.get_obj(x=xstep, y=ystep) != None:
+                            if not isinstance(self._map.get_obj(x=xstep, y=ystep), self.prey_class):
+                                continue
                     # Юнит еще не выбирал данный шаг?
                     if name not in self.blocked_pos:
                         # Расчет параметров
