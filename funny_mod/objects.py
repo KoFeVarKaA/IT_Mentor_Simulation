@@ -17,86 +17,73 @@ class CreatureDependencies(TypedDict):
     generator: Generator
 
 class FunnyCreature(Creature):
-    symbol=Cfg.picture_predator
-
     def __init__(self,
             pos: tuple,
             dependencies: CreatureDependencies,
-            prey_class: type,
-            hunter_class: type,
         ) -> None:
         super().__init__(
             pos=pos,
-            prey_class = prey_class, 
             pathfinder= PathfindingHerbivore(
                 _map = dependencies["_map"],
                 locator = dependencies["locator"],
-                prey_class=prey_class,
-                hunter_class=hunter_class,
                 ),
             _map = dependencies["_map"],
             locator = dependencies["locator"],
             generator = dependencies["generator"],
         )
-        self.hunter_class=hunter_class
         self.statistic = dependencies["statistic"]
         self.is_busy = False
         self.dependencies = dependencies
 
     def eat_prey(self, **kwargs) -> None:
         self.generator.generate(
-            self.prey_class, 1, dependencies=self.dependencies, **kwargs
+            1, dependencies=self.dependencies, **kwargs
             )
 
 class Grass(FunnyCreature):
     symbol=Cfg.picture_grass
+    hunter_picture=Cfg.picture_herbivore
+    prey_picture=Cfg.picture_tree
 
     def eat_prey(self) -> None:
-        super().eat_prey(
-            prey_class=Tree, 
-            hunter_class=FunnyHerbivore,
-        )
+        super().eat_prey()
         self.statistic.eaten_tree += 1
     
     
 class Tree(FunnyCreature):
-    symbol = Cfg.picture_tree
+    symbol=Cfg.picture_tree
+    hunter_picture=Cfg.picture_grass
+    prey_picture=Cfg.picture_rock
 
     def eat_prey(self) -> None:
-        super().eat_prey(
-            prey_class=Rock, 
-            hunter_class=Grass,
-        )
+        super().eat_prey()
         self.statistic.eaten_rock += 1
     
 
 class Rock(FunnyCreature):
-    symbol = Cfg.picture_rock
+    symbol=Cfg.picture_rock
+    hunter_picture=Cfg.picture_tree
+    prey_picture=Cfg.picture_predator
 
     def eat_prey(self) -> None:
-        super().eat_prey(
-            prey_class=FunnyPredator, 
-            hunter_class=Tree,
-        )
+        super().eat_prey()
         self.statistic.eaten_predator += 1
 
 class FunnyHerbivore(FunnyCreature):
     symbol=Cfg.picture_herbivore
+    hunter_picture=Cfg.picture_predator
+    prey_picture=Cfg.picture_grass
 
     def eat_prey(self) -> None:
-        super().eat_prey(
-            prey_class=Grass, 
-            hunter_class=FunnyPredator,
-        )
+        super().eat_prey()
         self.statistic.eaten_grass += 1
 
 
 class FunnyPredator(FunnyCreature):
     symbol=Cfg.picture_predator
-
+    hunter_picture=Cfg.picture_rock
+    prey_picture=Cfg.picture_herbivore
+    
     def eat_prey(self) -> None:
-        super().eat_prey(
-            prey_class=FunnyHerbivore, 
-            hunter_class=Rock,
-        )
-        self.statistic.eaten_predator += 1
+        super().eat_prey()
+        self.statistic.eaten_herbivores += 1

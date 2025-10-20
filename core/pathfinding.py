@@ -9,15 +9,11 @@ class Pathfinding():
             self,
             _map: Map,
             locator: Locator,
-            prey_class: Entity,
-            hunter_class: type = None,
     ) -> None:
-        self.prey_class = prey_class  
         self.ch_step = {}         
         self.blocked_pos = []
         self._map = _map
         self.locator = locator 
-        self.hunter_class = hunter_class
 
     # Узнать доступные шаги
     def get_av_step(self, xs: int, ys: int, xf: int, yf: int) -> list:
@@ -35,7 +31,7 @@ class Pathfinding():
                     # Выбранный шаг - это не объект в черном списке (см. выше)
                     if self._map.get_obj(x=xstep, y=ystep) != None:
                         if self._map.get_obj(x=xstep, y=ystep) != None:
-                            if not isinstance(self._map.get_obj(x=xstep, y=ystep), self.prey_class):
+                            if not self._map.get_obj(x=xstep, y=ystep).symbol == self._map.get_obj(xs, ys).prey_picture:
                                 continue
                     # Юнит еще не выбирал данный шаг?
                     if name not in self.blocked_pos:
@@ -120,7 +116,7 @@ class PathfindingPredator(Pathfinding):
 
 class PathfindingHerbivore(Pathfinding):    
     def dist_to_pred(self, xs: int, ys: int) -> int:
-        xf, yf = self.locator.nearest_smth([xs, ys], self.hunter_class)
+        xf, yf = self.locator.nearest_smth([xs, ys], self._map.get_obj(xs, ys).hunter_picture)
         return self.locator.get_dist(xs, ys, xf, yf)
 
     def get_weight(self, weight_mass: list, xs: int, ys: int) -> int:

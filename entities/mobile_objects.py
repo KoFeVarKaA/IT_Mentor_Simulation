@@ -19,20 +19,16 @@ class Creature(Entity):
                 _map: Map,
                 locator: Locator,
                 generator: Generator,
-                prey_class: type, 
                 pathfinder: Pathfinding,
         ) -> None:
         self._map = _map
         self.locator = locator
         self.generator = generator
         self.pos = pos
-        self.pathfinder = pathfinder
-        self.prey_class = prey_class
-
 
     # "Съесть" добычу
     def eat_prey(self, **kwargs) -> None:
-        self.generator.generate(self.prey_class, 1, **kwargs)
+        self.generator.generate(1, **kwargs)
 
     # Механика "занятости" добычи,
     # чтобы все охотники не охотились на одну добычу
@@ -51,18 +47,18 @@ class Creature(Entity):
                 if 0 <= xstep < self._map.width and 0 <= ystep < self._map.height :
                     name = (xstep, ystep)
                     if name in self._map.get_map.keys():
-                        if isinstance(self._map.get_map[(xstep, ystep)], self.prey_class):
+                        if self._map.get_map[(xstep, ystep)].symbol == self.prey_picture:
                             return name
 
         # Определяем свободную добычу
         free_prey = []
-        for prey_pos in self._map.get_pos_objs(self.prey_class):
+        for prey_pos in self._map.get_pos_objs(obj_picture=self.prey_picture):
             if not self._map.get_map[prey_pos].is_busy:
                 free_prey.append(prey_pos)
 
         # Если вся добыча уже занята
         if len(free_prey) == 0:
-            return self.locator.nearest_smth(self.pos, self.prey_class)
+            return self.locator.nearest_smth(self.pos, self.prey_picture)
 
         # Вычисляем ближайшую из свободных
         nearest_prey = free_prey[0]
@@ -76,19 +72,22 @@ class Creature(Entity):
         return nearest_prey
     
     def make_move(self) -> None:
-        pos_food = self.get_pos_food()
-        self._map.get_map[pos_food].busy_unit()
-        xf, yf = self.pathfinder.find_path(
+        pos_food = self.get_pos_food()          # Найти добычу
+        self._map.get_map[pos_food].busy_unit() # Занять добычу (чтобы другие не охотились на нее)
+        xf, yf = self.pathfinder.find_path(     # Ищем путь до добычи
             self.pos[0], self.pos[1], pos_food[0], pos_food[1]
             )
+        # Если объект не может сходить
         if (xf, yf) == self.pos:
             return
-        if (xf, yf) in self._map.get_map.keys():
-            if isinstance(self._map.get_map[(xf, yf)], self.prey_class):
-                self.eat_prey()
-        self._map.add_object(self._map.get_obj(self.pos[0], self.pos[1]), xf, yf)
-        self._map.delete_object(self.pos[0], self.pos[1])
-        self._map.get_obj(xf, yf).pos = (xf, yf)
+        # Если хищник съедает добычу
+        elif (xf, yf) in self._map.get_map.keys():
+            if self._map.get_map[(xf, yf)].symbol == self.prey_picture:
+                self.eat_prey() # Съедаем добычу
+                self._map.delete_object(xf, yf)                                   # Удаляем добычу
+        self._map.add_object(self._map.get_obj(self.pos[0], self.pos[1]), xf, yf) # Делаем шаг охотником
+        self._map.delete_object(self.pos[0], self.pos[1])                         # Удаляем охотника со старого места
+        self._map.get_obj(xf, yf).pos = (xf, yf)                                  # Меняем данные у охотника (Не в карте, а в "памяти" у сущности)
 
     def busy_unit(self) -> None:
         self.is_busy = True
@@ -99,6 +98,9 @@ class Creature(Entity):
 
 class Herbivore(Creature):
     symbol=Cfg.picture_herbivore
+    hunter_picture=Cfg.picture_predator
+    prey_picture=Cfg.picture_grass
+
     def __init__(self,
             pos: tuple,
             statistic: Statistic,
@@ -108,12 +110,9 @@ class Herbivore(Creature):
         ) -> None:
         super().__init__(
             pos=pos,
-            prey_class = Grass, 
             pathfinder = PathfindingHerbivore(
                 _map = _map,
                 locator = locator,
-                prey_class = Grass,
-                hunter_class = Predator,
                 ),
             _map = _map,
             locator = locator,
@@ -131,6 +130,8 @@ class Herbivore(Creature):
 
 class Predator(Creature):
     symbol=Cfg.picture_predator
+    prey_picture=Cfg.picture_herbivore
+
     def __init__(self,
             pos: tuple,
             statistic: Statistic,
@@ -140,11 +141,9 @@ class Predator(Creature):
         ) -> None:
         super().__init__(
             pos=pos,
-            prey_class = Herbivore, 
             pathfinder=PathfindingPredator(
                 _map = _map,
                 locator = locator,
-                prey_class = Herbivore,
                 ),
             _map = _map,
             locator = locator,

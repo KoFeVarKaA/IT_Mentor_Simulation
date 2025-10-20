@@ -38,16 +38,23 @@ class Map():
             i += 1
         return keys[i-1]
     
-    def get_pos_objs(self, obj_class: type = None) -> list[tuple]:
+    def get_pos_objs(self, obj_class: type = None, obj_picture: str = None) -> list[tuple]:
         keys = self._map.keys()
         keys_obj = []
-        if obj_class == None:
+        if obj_class == None and obj_picture == None:
             return keys
-        for key in keys:
-            if isinstance(self._map[key], obj_class):
-                keys_obj.append(key)
-        return keys_obj
-    
+        elif obj_class != None:
+            for key in keys:
+                if isinstance(self._map[key], obj_class):
+                    keys_obj.append(key)
+            return keys_obj
+        else: # obj_picture != None:
+            for key in keys:
+                if self._map[key].symbol == obj_picture:
+                    keys_obj.append(key)
+            return keys_obj
+
+
     @property
     def get_map(self) -> dict:  
         return self._map

@@ -17,20 +17,10 @@ class FunnySimulation(Simulation):
             'locator': self.locator,
             'generator': self.generator,
         } 
-        # prey_class и hunter_class
-        other = [
-            [Rock, Grass],
-            [FunnyPredator, Tree],
-            [FunnyHerbivore, Rock],
-            [Grass, FunnyPredator],
-            [Tree, FunnyHerbivore],
-        ]
         for i in range(len(clases)):
             self.generator.generate(
                 object=clases[i], count=counts[i],
-                dependencies=dependencies,
-                prey_class=other[i][0], 
-                hunter_class=other[i][1],)
+                dependencies=dependencies,)
         
         self.render.draw_map(self._map)
         print(self.statistic.get_statistic())
