@@ -35,9 +35,9 @@ class FunnyCreature(Creature):
         self.is_busy = False
         self.dependencies = dependencies
 
-    def eat_prey(self, **kwargs) -> None:
+    def eat_prey(self) -> None:
         self.generator.generate(
-            1, dependencies=self.dependencies, **kwargs
+            PictureToPreyClass.classes[self.prey_picture], 1, dependencies=self.dependencies
             )
 
 class Grass(FunnyCreature):
@@ -87,3 +87,12 @@ class FunnyPredator(FunnyCreature):
     def eat_prey(self) -> None:
         super().eat_prey()
         self.statistic.eaten_herbivores += 1
+
+class PictureToPreyClass:
+    classes = {
+    Cfg.picture_grass: FunnyHerbivore, 
+    Cfg.picture_tree: Grass,  
+    Cfg.picture_rock: Tree,   
+    Cfg.picture_predator: Rock,  
+    Cfg.picture_herbivore: FunnyPredator, 
+    }

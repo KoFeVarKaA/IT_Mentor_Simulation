@@ -1,3 +1,4 @@
 info.txt
 tests/hiden_tests.py
 *.pyc
+/funny_mod
